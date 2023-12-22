@@ -26,11 +26,21 @@ export class AuthService {
     }
   }
 
-  async processRegistration(username: string, password: string, email: string, fullname: string, createdBy: string, req: any): Promise<boolean | null> {
+  async processRegistration(
+    username: string,
+    password: string,
+    email: string,
+    fullname: string,
+    createdBy: string,
+    req: any,
+  ): Promise<boolean | null> {
     try {
       const hashedPassword = await bcrypt.hash(password, 10); // Implement password hashing here
       const client = await this.pool.connect();
-      await client.query('INSERT INTO "GDP".scada_users (username, password, role, email, fullname, is_active, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7)', [username, hashedPassword, 1, email, fullname, 1, createdBy]);
+      await client.query(
+        'INSERT INTO "GDP".scada_users (username, password, role, email, fullname, is_active, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        [username, hashedPassword, 1, email, fullname, 1, createdBy],
+      );
       req.session.username = username;
       return true;
     } catch (error) {
@@ -39,12 +49,19 @@ export class AuthService {
     }
   }
 
-  async processLogin(username: string, password: string, req: any): Promise<boolean | null> {
+  async processLogin(
+    username: string,
+    password: string,
+    req: any,
+  ): Promise<boolean | null> {
     try {
       const client = await this.pool.connect();
-      const result = await client.query('SELECT * FROM "GDP".scada_users WHERE username = $1', [username]);
+      const result = await client.query(
+        'SELECT * FROM "GDP".scada_users WHERE username = $1',
+        [username],
+      );
       const user = result.rows[0];
-      if (user && await bcrypt.compare(password, user.password)) {
+      if (user && (await bcrypt.compare(password, user.password))) {
         req.session.username = user.username;
         return true;
       }

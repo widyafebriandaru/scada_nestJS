@@ -11,11 +11,11 @@ import {
 import { AuthService } from '../services/auth.service';
 
 @Controller('/auth')
-export class AuthController  {
+export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Get()
   @Redirect('/login')
-  index() { }
+  index() {}
 
   @Get('/login')
   @Render('auth/login')
@@ -30,7 +30,11 @@ export class AuthController  {
     }
     const { username, password } = request.body;
     console.log(`LOGIN =>>username=${username}`);
-    const allSchemas = await this.authService.processLogin(username, password, Req);
+    const allSchemas = await this.authService.processLogin(
+      username,
+      password,
+      Req,
+    );
     console.log(allSchemas);
     if (allSchemas === true) {
       response.redirect('/home');
