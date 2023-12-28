@@ -1,6 +1,6 @@
 // your.controller.ts or your.service.ts
 import { Controller, Get } from '@nestjs/common';
-import { MqttService } from '../services/mqtt.service';
+import { MqttService } from './mqtt.service';
 
 @Controller('MqttController')
 export class MqttController {
@@ -13,7 +13,7 @@ export class MqttController {
 
   @Get('send-message')
   sendMessage(): string {
-    this.mqttService.sendMessage('datapoint', 'Hello, MQTT!');
+    this.mqttService.sendMessage('datapoint', 'Hello MQTT ini dari nestJS!');
     return 'Message sent';
   }
 

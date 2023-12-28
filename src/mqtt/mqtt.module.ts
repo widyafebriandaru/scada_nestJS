@@ -1,7 +1,7 @@
 // your.module.ts
 import { Module } from '@nestjs/common';
-import { MqttController } from '../controllers/mqtt.controller';
-import { MqttService } from 'src/services/mqtt.service';
+import { MqttController } from './mqtt.controller';
+import { MqttService } from 'src/mqtt/mqtt.service';
 
 @Module({
   providers: [MqttService],
