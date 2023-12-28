@@ -1,5 +1,5 @@
 // your.controller.ts or your.service.ts
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { MqttService } from './mqtt.service';
 
 @Controller('MqttController')
@@ -13,13 +13,14 @@ export class MqttController {
 
   @Get('send-message')
   sendMessage(): string {
-    this.mqttService.sendMessage('datapoint', 'Hello MQTT ini dari nestJS!');
+    this.mqttService.sendMessage('event', 'Hello MQTT ini dari nestJS!');
     return 'Message sent';
   }
 
-  @Get('subscribe-to-topic')
-  subscribeToTopic(): string {
-    this.mqttService.subscribeToTopic('datapoint');
-    return 'Subscribed to topic';
+  @Get('subscribe-to-topic/:param')
+  subscribeToTopic(@Param('param') param: string): string {
+    const topic = `datapoint/${param}`;
+    this.mqttService.subscribeToTopic(topic); //jadiin dinamis
+    return `Subscribed to topic: ${topic}`;
   }
 }
