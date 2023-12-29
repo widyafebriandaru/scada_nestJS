@@ -1,11 +1,14 @@
 // mqtt.service.ts
 import * as mqtt from 'mqtt';
+import { Injectable } from '@nestjs/common';
+import { SocketGatewayz } from '../websocket/socket.gateway';
 
+@Injectable()
 export class MqttService {
   private client;
   private readonly brokerUrl = 'mqtt://10.14.152.231:1883';
 
-  constructor() {
+  constructor(private readonly socketGateway: SocketGatewayz) {
     console.log('Initializing MQTT service');
     this.client = mqtt.connect(this.brokerUrl);
 
@@ -32,6 +35,10 @@ export class MqttService {
       console.log(
         `Received message on topic ${receivedTopic}: ${message.toString()}`,
       );
+      this.socketGateway.handleMqttData(null, {
+        topic: receivedTopic,
+        message: message.toString(),
+      });
     });
   }
 

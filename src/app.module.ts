@@ -3,12 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MqttModule } from './mqtt/mqtt.module';
 import { SocketModule } from 'src/websocket/socket.module';
-import { SocketGateway } from 'src/websocket/socket.gateway';
+import { SocketGatewayz } from 'src/websocket/socket.gateway';
 import { ConfigModule } from 'src/config/config.module';
 
 @Module({
   imports: [MqttModule, SocketModule, ConfigModule],
   controllers: [AppController],
-  providers: [AppService, SocketGateway],
+  providers: [AppService, SocketGatewayz],
 })
 export class AppModule {}

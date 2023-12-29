@@ -1,17 +1,30 @@
-// socket.gateway.ts
+// app.gateway.ts
 import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
+import { Injectable } from '@nestjs/common/decorators/core';
 
 @WebSocketGateway()
-export class SocketGateway {
+@Injectable()
+export class SocketGatewayz
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() server: Server;
 
-  @SubscribeMessage('message')
-  handleMessage(client: Socket, payload: { message: string }): void {
-    this.server.emit('message', payload.message);
+  handleConnection(client: any): any {
+    console.log(`Client connected: ${client.id}`);
+  }
+  handleDisconnect(client: any): any {
+    console.log(`Client disconnected: ${client.id}`);
+  }
+
+  @SubscribeMessage('mqttData') // Define a custom message event
+  handleMqttData(client: any, data: any): void {
+    this.server.emit('mqttData', data); // Broadcast the MQTT data to all connected clients
   }
 }
