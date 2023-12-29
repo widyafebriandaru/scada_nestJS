@@ -9,7 +9,7 @@ import {
 import { Server } from 'socket.io';
 import { Injectable } from '@nestjs/common/decorators/core';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 @Injectable()
 export class SocketGatewayz
   implements OnGatewayConnection, OnGatewayDisconnect
