@@ -27,4 +27,10 @@ export class SocketGatewayz
   handleMqttData(client: any, data: any): void {
     this.server.emit('mqttData', data); // Broadcast the MQTT data to all connected clients
   }
+
+  @SubscribeMessage('frontendMessage') // Handle messages from the frontend
+  handleFrontendMessage(client: any, message: string): void {
+    console.log('XXXXXXXXXXXXXXXX Received message from frontend:', message);
+    // Process the message as needed
+  }
 }
