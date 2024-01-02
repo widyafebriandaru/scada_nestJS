@@ -10,6 +10,7 @@ export class VictoriaMetricsController implements OnModuleInit {
 
   onModuleInit() {
     this.startPostingData();
+    this.fetchAndLogData();
   }
 
   private startPostingData() {
@@ -24,5 +25,9 @@ export class VictoriaMetricsController implements OnModuleInit {
       clearInterval(postingInterval);
       console.log('Posting stopped.');
     }, 3600000); // 1 hour (3600 seconds * 1000 milliseconds)
+  }
+
+  private fetchAndLogData() {
+    this.victoriaMetricsService.fetchDataVM();
   }
 }

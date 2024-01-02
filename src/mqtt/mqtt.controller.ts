@@ -17,6 +17,7 @@ export class MqttController {
     return 'Message sent';
   }
 
+  //Subscribe Specific Topic
   @Get('subscribe-to-topic/:param')
   subscribeToTopic(@Param('param') param: string): string {
     const topic = `datapoint/${param}`;

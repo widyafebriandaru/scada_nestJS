@@ -21,9 +21,12 @@ export class VictoriaMetricsService {
       },
     };
 
-    return `# TYPE ${postData.metric} gauge\n${
-      postData.metric
-    }{${Object.entries(postData.labels)
+    // return `# TYPE ${postData.metric} gauge\n${
+    //   postData.metric
+    // }{${Object.entries(postData.labels)
+    //   .map(([key, value]) => `${key}="${value}"`)
+    //   .join(',')}} ${postData.value}`;
+    return `${postData.metric}{${Object.entries(postData.labels)
       .map(([key, value]) => `${key}="${value}"`)
       .join(',')}} ${postData.value}`;
   }
@@ -45,5 +48,44 @@ export class VictoriaMetricsService {
     } catch (error) {
       return `Error: ${error.message}`;
     }
+  }
+
+  // GET DATA FORM DB
+
+  async fetchDataVM(): Promise<void> {
+    const query = 'mampang{label="val_label1",label2="val_label2"}';
+    // const step = '1h';
+    setInterval(async () => {
+      try {
+        // const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+        // const startTime = currentTimeInSeconds + 25200; // 1 hour ago
+        // const endTime = currentTimeInSeconds;
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+
+        const response = await fetch(
+          // `${this.victoriaMetricsEndpoint}?query=${encodeURIComponent(query)}`,
+          `http://10.14.152.231:8428/api/v1/query?query=mampang&step=1h`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              // 'Content-Type': 'text/plain',
+            },
+          },
+        );
+        // console.log('Response Status:', response.status);
+        // console.log('Response Headers:', response.headers.raw());
+        // console.log('RESPONSE', response);
+
+        if (response.status === 204) {
+          console.log('No data available.');
+        } else {
+          const data = await response.text(); // Read the response as text
+          console.log('Fetched data:', data);
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    }, 2500);
   }
 }
