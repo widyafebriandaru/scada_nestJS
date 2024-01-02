@@ -32,9 +32,9 @@ export class MqttService {
     //START DATAPOINT SUBSCRIBE CONNECTION
     this.client.subscribe(`datapoint/#`); //kasih log kalau berhasil dan gagal
     this.client.on('message', (receivedTopic, message) => {
-      // console.log(
-      //   `Received message on topic ${receivedTopic}: ${message.toString()}`,
-      // );
+      console.log(
+        `Received message on topic ${receivedTopic}: ${message.toString()}`,
+      );
       this.socketGateway.handleMqttData(null, {
         topic: receivedTopic,
         message: message.toString(),
