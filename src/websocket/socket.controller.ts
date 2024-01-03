@@ -1,11 +1,12 @@
 // mqtt.controller.ts
 import { Controller, Get, Param } from '@nestjs/common';
-import { SocketGateway } from './socket.gateway';
+import { SocketGatewayz } from './socket.gateway';
 
 @Controller('socket')
 export class SocketController {
-  constructor(private readonly socketGateway: SocketGateway) {}
+  constructor(private readonly socketGateway: SocketGatewayz) {}
 
+  //Subscribe MQTT berdasarkan topik tertentu
   @Get('subscribe-to-topic/:param')
   subscribeToTopic(@Param('param') param: string): string {
     const topic = `datapoint/${param}`;
