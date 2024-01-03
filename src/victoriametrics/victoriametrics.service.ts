@@ -20,12 +20,6 @@ export class VictoriaMetricsService {
         label2: 'val_label2',
       },
     };
-
-    // return `# TYPE ${postData.metric} gauge\n${
-    //   postData.metric
-    // }{${Object.entries(postData.labels)
-    //   .map(([key, value]) => `${key}="${value}"`)
-    //   .join(',')}} ${postData.value}`;
     return `${postData.metric}{${Object.entries(postData.labels)
       .map(([key, value]) => `${key}="${value}"`)
       .join(',')}} ${postData.value}`;
@@ -51,15 +45,11 @@ export class VictoriaMetricsService {
   }
 
   // GET DATA FORM DB
-
   async fetchDataVM(): Promise<void> {
     const query = 'mampang{label="val_label1",label2="val_label2"}';
     // const step = '1h';
     setInterval(async () => {
       try {
-        // const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-        // const startTime = currentTimeInSeconds + 25200; // 1 hour ago
-        // const endTime = currentTimeInSeconds;
         await new Promise((resolve) => setTimeout(resolve, 5000));
 
         const response = await fetch(
@@ -69,7 +59,6 @@ export class VictoriaMetricsService {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              // 'Content-Type': 'text/plain',
             },
           },
         );

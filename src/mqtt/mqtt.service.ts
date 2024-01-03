@@ -10,27 +10,10 @@ export class MqttService {
 
   constructor(private readonly socketGateway: SocketGatewayz) {
     console.log('Initializing MQTT service');
-    this.client = mqtt.connect(this.brokerUrl);
+    this.connect();
 
-    //Connect to MQTT
-    this.client.on('connect', () => {
-      console.log('Connected to MQTT broker');
-    });
-
-    //Reconnect on error
-    this.client.on('error', (error) => {
-      console.error('Error connecting to MQTT broker:', error);
-      this.reconnect();
-    });
-
-    //Reconnection on close
-    this.client.on('close', () => {
-      console.log('Connection to MQTT broker closed');
-      this.reconnect();
-    });
-
-    //START DATAPOINT SUBSCRIBE CONNECTION
-    this.client.subscribe(`datapoint/#`); //kasih log kalau berhasil dan gagal
+    //START DATAPOINT SUBSCRIBE CONNECTION UNTUK SEMUA DATA
+    this.client.subscribe(`datapoint/#`);
     this.client.on('message', (receivedTopic, message) => {
       // console.log(
       //   `Received message on topic ${receivedTopic}: ${message.toString()}`,
@@ -44,8 +27,19 @@ export class MqttService {
 
   private connect() {
     this.client = mqtt.connect(this.brokerUrl);
+
     this.client.on('connect', () => {
       console.log('Connected to MQTT broker');
+    });
+
+    this.client.on('error', (error) => {
+      console.error('Error connecting to MQTT broker:', error);
+      this.reconnect();
+    });
+
+    this.client.on('close', () => {
+      console.log('Connection to MQTT broker closed');
+      this.reconnect();
     });
   }
 

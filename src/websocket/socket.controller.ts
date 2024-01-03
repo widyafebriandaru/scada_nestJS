@@ -6,6 +6,7 @@ import { SocketGatewayz } from './socket.gateway';
 export class SocketController {
   constructor(private readonly socketGateway: SocketGatewayz) {}
 
+  //Subscribe MQTT berdasarkan topik tertentu
   @Get('subscribe-to-topic/:param')
   subscribeToTopic(@Param('param') param: string): string {
     const topic = `datapoint/${param}`;
