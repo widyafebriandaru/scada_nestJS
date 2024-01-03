@@ -13,11 +13,11 @@ export class VictoriaMetricsService {
 
   private createPrometheusData(): string {
     const postData = {
-      metric: 'mampang',
+      metric: 'bebasaja',
       value: this.getRandomValue(),
       labels: {
-        label: 'val_label1',
-        label2: 'val_label2',
+        label: 'cobagantiisinya',
+        label2: 6969696969,
       },
     };
     return `${postData.metric}{${Object.entries(postData.labels)
