@@ -70,7 +70,7 @@ export class VictoriaMetricsService {
           console.log('No data available.');
         } else {
           const data = await response.text(); // Read the response as text
-          console.log('Fetched data:', data);
+          // console.log('Fetched data:', data);
         }
       } catch (error) {
         console.error('Error:', error.message);
