@@ -23,7 +23,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Create Tag Image
-      run: docker tag firstimage widyafebriandaru/firstimage
+      run: docker tag testingcicd widyafebriandaru/firstimage
 
     - name: Push Docker image
       run: docker push widyafebriandaru/firstimage:${{ github.sha }}
