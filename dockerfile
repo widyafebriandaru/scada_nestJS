@@ -14,7 +14,7 @@ RUN npm install
 COPY . /app
 
 # Step 6: Expose port 4000 (if necessary)
-EXPOSE 4000
+EXPOSE 730
 
 # Step 7: Build the app (if necessary)
 RUN npm run build
