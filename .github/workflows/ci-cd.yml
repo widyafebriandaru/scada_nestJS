@@ -17,13 +17,13 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker image
-      run: docker build -t my-app:${{ github.sha }} .
+      run: docker build -t testingcicd:${{ github.sha }} .
 
     - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_NAME }}" --password-stdin
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Push Docker image
-      run: docker push my-app:${{ github.sha }}
+      run: docker push testingcicd:${{ github.sha }}
 
     - name: Deploy to Server
       uses: appleboy/ssh-action@v0.1.3
@@ -32,10 +32,10 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          docker pull my-app:${{ github.sha }}
-          docker stop my-app || true
-          docker rm my-app || true
-          docker run -d --name my-app -p 730:729 my-app:${{ github.sha }}
+          docker pull testingcicd:${{ github.sha }}
+          docker stop testingcicd || true
+          docker rm testingcicd || true
+          docker run -d --name testingcicd -p 730:729 testingcicd:${{ github.sha }}
 
 # name: CI/CD Pipeline
 
