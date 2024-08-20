@@ -23,10 +23,10 @@ jobs:
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Create Tag Image
-      run: docker tag testingcicd widyafebriandaru/firstimage
+      run: docker tag testingcicd widyafebriandaru/testingcicd
 
     - name: Push Docker image
-      run: docker push widyafebriandaru/firstimage:${{ github.sha }}
+      run: docker push widyafebriandaru/testingcicd:${{ github.sha }}
 
     - name: Deploy to Server
       uses: appleboy/ssh-action@v0.1.3
