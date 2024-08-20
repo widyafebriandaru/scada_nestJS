@@ -23,7 +23,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Create Tag Image
-      run: docker tag testingcicd widyafebriandaru/testingcicd
+      run: docker tag testingcicd:${{ github.sha }} widyafebriandaru/testingcicd:${{ github.sha }}
 
     - name: Push Docker image
       run: docker push widyafebriandaru/testingcicd:${{ github.sha }}
@@ -35,34 +35,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          docker pull testingcicd:${{ github.sha }}
+          docker pull widyafebriandaru/testingcicd:${{ github.sha }}
           docker stop testingcicd || true
           docker rm testingcicd || true
-          docker run -d --name testingcicd -p 730:729 testingcicd:${{ github.sha }}
-
-# name: CI/CD Pipeline
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v2
-
-#     - name: Set up Docker Buildx
-#       uses: docker/setup-buildx-action@v1
-
-#     - name: Build Docker image
-#       run: docker build -t my-app:${{ github.sha }} .
-
-#     - name: Login to Docker Hub
-#       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-#     - name: Push Docker image
-#       run: docker push my-app:${{ github.sha }}
+          docker run -d --name testingcicd -p 730:729 widyafebriandaru/testingcicd:${{ github.sha }}
