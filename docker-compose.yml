@@ -1,0 +1,16 @@
+version: '2.2'
+
+services:
+    iconics-configuration-dev:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '730:729'
+        networks:
+            - app-tier
+        env_file:
+            - .env
+networks:
+    app-tier:
+        external: true

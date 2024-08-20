@@ -17,6 +17,6 @@ async function bootstrap() {
   // );
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(cors());
-  await app.listen(3000);
+  await app.listen(729);
 }
 bootstrap();
